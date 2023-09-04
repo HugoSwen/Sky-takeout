@@ -1,4 +1,4 @@
-package com.hugo.admin;
+package com.hugo.controller.admin;
 
 import com.hugo.constant.JwtClaimsConstant;
 import com.hugo.dto.EmployeeLoginDTO;
