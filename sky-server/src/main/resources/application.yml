@@ -15,7 +15,7 @@ spring:
     host: 192.168.164.128
     port: 6379
     database: 0
-    password: "123456"
+    password: 123456
     lettuce:
       pool:
         max-active: 8
@@ -27,6 +27,7 @@ mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
+  type-aliases-package: com.hugo.entity
 
 logging:
   level:
@@ -35,3 +36,8 @@ logging:
         mapper: debug
         service: info
         controller: info
+sky:
+  jwt:
+    admin-secret-key: hugoweb
+    admin-ttl: 7200000
+    admin-token-name: token
