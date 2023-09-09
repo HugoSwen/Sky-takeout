@@ -1,5 +1,6 @@
 package com.hugo.handler;
 
+import com.hugo.constant.MessageConstant;
 import com.hugo.exception.BaseException;
 import com.hugo.result.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +18,6 @@ public class GlobalExceptionHandler {
 
     /**
      * 捕获业务异常
-     * @param ex
-     * @return
      */
     @ExceptionHandler
     public Result exceptionHandler(BaseException ex){
@@ -26,14 +25,20 @@ public class GlobalExceptionHandler {
         return Result.error(ex.getMessage());
     }
 
+    /**
+     * 捕获sql字段重复异常
+     */
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public Result SQLIntegrityConstraintViolationHandler(SQLIntegrityConstraintViolationException ex){
         log.error("字段重复：{}", ex.getMessage());
         // Duplicate entry 'admin' for key 'employee.idx_username'
-        String msg = ex.getMessage();
-        if (msg.split(" ")[0].equals("Duplicate"))
-            return Result.error(msg.split(" ")[2] + "用户名已存在");
-        else
-            return Result.error("未知错误");
+        String message = ex.getMessage();
+        if (message.contains("Duplicate entry")){
+            String[] s = message.split(" ");
+            String username = s[2];
+            String msg = username + MessageConstant.ALREADY_EXIST;
+            return Result.error(msg);
+        } else
+            return Result.error(MessageConstant.UNKNOWN_ERROR);
     }
 }

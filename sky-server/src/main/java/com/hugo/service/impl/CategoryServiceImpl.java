@@ -2,10 +2,12 @@ package com.hugo.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.hugo.annotation.AutoFill;
 import com.hugo.context.BaseContext;
 import com.hugo.dto.CategoryDTO;
 import com.hugo.dto.CategoryPageQueryDTO;
 import com.hugo.entity.Category;
+import com.hugo.enumeration.OperationType;
 import com.hugo.mapper.CategoryMapper;
 import com.hugo.result.PageResult;
 import com.hugo.service.CategoryService;
@@ -26,11 +28,6 @@ public class CategoryServiceImpl implements CategoryService {
     public void addCategory(CategoryDTO categoryDTO) {
         Category category = new Category();
         BeanUtils.copyProperties(categoryDTO, category);
-        category.setCreateTime(LocalDateTime.now());
-        category.setUpdateTime(LocalDateTime.now());
-        category.setCreateUser(BaseContext.getCurrentId());
-        category.setUpdateUser(BaseContext.getCurrentId());
-
         categoryMapper.insert(category);
     }
 
@@ -47,11 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void update(CategoryDTO categoryDTO) {
         Category category = new Category();
-
         BeanUtils.copyProperties(categoryDTO, category);
-        category.setUpdateTime(LocalDateTime.now());
-        category.setUpdateUser(BaseContext.getCurrentId());
-
         categoryMapper.update(category);
     }
 

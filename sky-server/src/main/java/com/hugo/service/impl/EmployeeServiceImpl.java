@@ -2,6 +2,7 @@ package com.hugo.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.hugo.annotation.AutoFill;
 import com.hugo.constant.MessageConstant;
 import com.hugo.constant.StatusConstant;
 import com.hugo.context.BaseContext;
@@ -10,6 +11,7 @@ import com.hugo.dto.EmployeeLoginDTO;
 import com.hugo.dto.EmployeePageQueryDTO;
 import com.hugo.dto.PasswordEditDTO;
 import com.hugo.entity.Employee;
+import com.hugo.enumeration.OperationType;
 import com.hugo.exception.AccountLockedException;
 import com.hugo.exception.AccountNotFoundException;
 import com.hugo.exception.PasswordErrorException;
@@ -61,13 +63,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void addEmp(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
-
         BeanUtils.copyProperties(employeeDTO, employee);
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
-
         employeeMapper.insert(employee);
     }
 
@@ -118,9 +114,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void update(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO, employee);
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
-
         employeeMapper.update(employee);
     }
 

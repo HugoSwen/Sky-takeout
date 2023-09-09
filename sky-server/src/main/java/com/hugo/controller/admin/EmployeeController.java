@@ -13,6 +13,7 @@ import com.hugo.service.EmployeeService;
 import com.hugo.utils.JwtUtil;
 import com.hugo.vo.EmployeeLoginVO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +38,7 @@ public class EmployeeController {
     /**
      * 登录
      */
+    @ApiOperation(value = "员工登录")
     @PostMapping("/login")
     public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
         log.info("员工登录：{}", employeeLoginDTO);
@@ -65,6 +67,7 @@ public class EmployeeController {
     /**
      * 退出
      */
+    @ApiOperation(value = "员工登出")
     @PostMapping("/logout")
     public Result<String> logout() {
         return Result.success();
@@ -73,6 +76,7 @@ public class EmployeeController {
     /**
      * 新增员工
      */
+    @ApiOperation(value = "新增员工")
     @PostMapping
     public Result<String> addEmp(@RequestBody EmployeeDTO emp){
         log.info("新增员工：{}", emp);
@@ -83,6 +87,7 @@ public class EmployeeController {
     /**
      * 员工分页查询
      */
+    @ApiOperation(value = "员工分页查询")
     @GetMapping("/page")
     public Result<PageResult> pageQuery(EmployeePageQueryDTO employeePageQueryDTO){
         log.info("员工分页查询：{}", employeePageQueryDTO);
@@ -94,6 +99,7 @@ public class EmployeeController {
     /**
      * 禁用启用员工账号
      */
+    @ApiOperation(value = "启禁用员工账号")
     @PostMapping("/status/{status}")
     public Result enableOrDisable(@PathVariable Integer status, Long id){
         log.info("启禁用员工账号：{},{}", status, id);
@@ -105,6 +111,7 @@ public class EmployeeController {
     /**
      * 根据id获取员工信息
      */
+    @ApiOperation(value = "根据id查询员工")
     @GetMapping("/{id}")
     public Result<Employee> getById(@PathVariable Long id){
         log.info("查询员工id：{}", id);
@@ -116,6 +123,7 @@ public class EmployeeController {
     /**
      * 修改员工密码
      */
+    @ApiOperation(value = "修改员工密码")
     @PutMapping("/editPassword")
     public Result editPassword(@RequestBody PasswordEditDTO passwordEditDTO){
         log.info("修改员工密码：{}", passwordEditDTO);
@@ -127,6 +135,7 @@ public class EmployeeController {
     /**
      * 修改员工信息
      */
+    @ApiOperation(value = "修改员工信息")
     @PutMapping
     public Result update(@RequestBody EmployeeDTO employeeDTO){
         log.info("修改员工信息：{}", employeeDTO);

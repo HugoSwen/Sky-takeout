@@ -6,12 +6,17 @@ import com.hugo.entity.Category;
 import com.hugo.result.PageResult;
 import com.hugo.result.Result;
 import com.hugo.service.CategoryService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapters;
 import java.util.List;
 
+@Api(tags = "分类相关接口")
 @Slf4j
 @RestController
 @RequestMapping("admin/category")
@@ -23,6 +28,7 @@ public class CategoryController {
     /**
      * 新增分类
      */
+    @ApiOperation(value = "新增分类")
     @PostMapping
     public Result addCategory(@RequestBody CategoryDTO categoryDTO) {
         log.info("新增分类：{}", categoryDTO);
@@ -34,6 +40,7 @@ public class CategoryController {
     /**
      * 分类分页查询
      */
+    @ApiOperation(value = "员工分页查询")
     @GetMapping("/page")
     public Result<PageResult> pageQuery(CategoryPageQueryDTO categoryPageQueryDTO) {
         log.info("员工分页查询：{}", categoryPageQueryDTO);
@@ -45,6 +52,7 @@ public class CategoryController {
     /**
      * 修改分类
      */
+    @ApiOperation(value = "修改分类")
     @PutMapping
     public Result update(@RequestBody CategoryDTO categoryDTO) {
         log.info("修改分类：{}", categoryDTO);
@@ -56,6 +64,7 @@ public class CategoryController {
     /**
      * 启用禁用分类
      */
+    @ApiOperation(value = "启用禁用分类")
     @PostMapping("/status/{status}")
     public Result enableOrDisable(@PathVariable Integer status, Long id) {
         log.info("启用禁用分类：{},{}", status, id);
@@ -67,6 +76,7 @@ public class CategoryController {
     /**
      * 根据类型查询分类
      */
+    @ApiOperation(value = "根据类型查询分类")
     @GetMapping("/list")
     public Result<List<Category>> getByType(Integer type) {
         log.info("根据类型查询分类：{}", type);
@@ -78,6 +88,7 @@ public class CategoryController {
     /**
      * 根据Id删除分类
      */
+    @ApiOperation(value = "根据id删除分类")
     @DeleteMapping
     public Result deleteById(Integer id) {
         log.info("根据id删除分类：{}", id);
