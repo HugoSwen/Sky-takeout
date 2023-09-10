@@ -1,6 +1,5 @@
 package com.hugo.aspect;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
 import com.hugo.annotation.AutoFill;
 import com.hugo.constant.AutoFillConstant;
 import com.hugo.context.BaseContext;
@@ -23,8 +22,7 @@ import java.time.LocalDateTime;
 public class AutoFillAspect {
 
     @Pointcut("@annotation(com.hugo.annotation.AutoFill)")
-    public void autoFillPointCut() {
-    }
+    public void autoFillPointCut() {}
 
     @Before("autoFillPointCut()")
     public void autoFill(JoinPoint joinPoint) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {

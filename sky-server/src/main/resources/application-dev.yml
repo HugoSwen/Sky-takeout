@@ -12,7 +12,7 @@ hugo:
     password: 123456
 
   alioss:
-    endpoint: https://oss-cn-hangzhou.aliyuncs.com
+    endpoint: oss-cn-hangzhou.aliyuncs.com
     access-key-id: LTAI5tB2BySkowf26xUzPrUn
     access-key-secret: OuijqcFAsxKvsnfoDtuQDLSrpHd1f0
     bucket-name: hugo-web-bucket1

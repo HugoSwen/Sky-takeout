@@ -32,14 +32,13 @@
         <pagehelper>1.4.6</pagehelper>
         <aliyun.sdk.oss>3.15.1</aliyun.sdk.oss>
         <knife4j>3.0.3</knife4j>
-        <aspectj>1.9.4</aspectj>
+        <aop>3.1.2</aop>
         <jjwt>0.9.1</jjwt>
         <jaxb-api>2.3.1</jaxb-api>
         <javax.activation>1.1.1</javax.activation>
         <jaxb-runtime>2.3.3</jaxb-runtime>
         <poi>3.16</poi>
         <wechatpay>0.4.8</wechatpay>
-        <swagger.annotations>1.5.22</swagger.annotations>
     </properties>
 
     <dependencyManagement>
@@ -81,15 +80,9 @@
             </dependency>
 
             <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjrt</artifactId>
-                <version>${aspectj}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjweaver</artifactId>
-                <version>${aspectj}</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-aop</artifactId>
+                <version>${aop}</version>
             </dependency>
 
             <dependency>

@@ -38,6 +38,7 @@ logging:
         mapper: debug
         service: info
         controller: info
+    org.springframework.jdbc.support.JdbcTransactionManager: debug
 
 hugo:
   jwt:
@@ -50,4 +51,5 @@ hugo:
     access-key-id: ${hugo.alioss.access-key-id}
     access-key-secret: ${hugo.alioss.access-key-secret}
     bucket-name: ${hugo.alioss.bucket-name}
+
 
