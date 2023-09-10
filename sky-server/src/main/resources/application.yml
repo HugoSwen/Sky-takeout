@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev
 
   servlet:
     multipart:
@@ -6,16 +8,16 @@ spring:
       max-request-size: 100MB
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/sky_takeout?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: 1234
+    driver-class-name: ${hugo.datasource.driver-class-name}
+    url: ${hugo.datasource.url}
+    username: ${hugo.datasource.username}
+    password: ${hugo.datasource.password}
 
   redis:
-    host: 192.168.164.128
-    port: 6379
-    database: 0
-    password: 123456
+    host: ${hugo.redis.host}
+    port: ${hugo.redis.port}
+    database: ${hugo.redis.database}
+    password: ${hugo.redis.password}
     lettuce:
       pool:
         max-active: 8
@@ -36,8 +38,16 @@ logging:
         mapper: debug
         service: info
         controller: info
-sky:
+
+hugo:
   jwt:
     admin-secret-key: hugoweb
     admin-ttl: 7200000
     admin-token-name: token
+
+  alioss:
+    endpoint: ${hugo.alioss.endpoint}
+    access-key-id: ${hugo.alioss.access-key-id}
+    access-key-secret: ${hugo.alioss.access-key-secret}
+    bucket-name: ${hugo.alioss.bucket-name}
+

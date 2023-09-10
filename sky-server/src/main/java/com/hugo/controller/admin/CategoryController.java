@@ -43,7 +43,7 @@ public class CategoryController {
     @ApiOperation(value = "员工分页查询")
     @GetMapping("/page")
     public Result<PageResult> pageQuery(CategoryPageQueryDTO categoryPageQueryDTO) {
-        log.info("员工分页查询：{}", categoryPageQueryDTO);
+        log.info("员工分页查询，页码：{}, 页面大小：{}", categoryPageQueryDTO.getPage(), categoryPageQueryDTO.getPageSize());
 
         PageResult pageResult = categoryService.pageQuery(categoryPageQueryDTO);
         return Result.success(pageResult);
@@ -67,7 +67,7 @@ public class CategoryController {
     @ApiOperation(value = "启用禁用分类")
     @PostMapping("/status/{status}")
     public Result enableOrDisable(@PathVariable Integer status, Long id) {
-        log.info("启用禁用分类：{},{}", status, id);
+        log.info("启用禁用分类，分类id：{}, 状态设置：{}", id, status);
 
         categoryService.setStatus(status, id);
         return Result.success();

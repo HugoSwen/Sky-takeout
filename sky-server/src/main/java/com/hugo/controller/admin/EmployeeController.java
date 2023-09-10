@@ -24,10 +24,10 @@ import java.util.Map;
 /**
  * 员工管理
  */
+@Api(tags = "员工相关接口")
 @Slf4j
 @RestController
 @RequestMapping("/admin/employee")
-@Api(tags = "员工相关接口")
 public class EmployeeController {
 
     @Autowired
@@ -70,6 +70,8 @@ public class EmployeeController {
     @ApiOperation(value = "员工登出")
     @PostMapping("/logout")
     public Result<String> logout() {
+        log.info("员工登出");
+
         return Result.success();
     }
 
@@ -90,7 +92,7 @@ public class EmployeeController {
     @ApiOperation(value = "员工分页查询")
     @GetMapping("/page")
     public Result<PageResult> pageQuery(EmployeePageQueryDTO employeePageQueryDTO){
-        log.info("员工分页查询：{}", employeePageQueryDTO);
+        log.info("员工分页查询，页码：{}，页面大小{}", employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
 
         PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageResult);
@@ -102,7 +104,7 @@ public class EmployeeController {
     @ApiOperation(value = "启禁用员工账号")
     @PostMapping("/status/{status}")
     public Result enableOrDisable(@PathVariable Integer status, Long id){
-        log.info("启禁用员工账号：{},{}", status, id);
+        log.info("启用禁用分类，分类id：{}, 状态设置：{}", id, status);
 
         employeeService.setStatus(status, id);
         return Result.success();

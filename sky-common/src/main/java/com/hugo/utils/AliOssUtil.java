@@ -9,12 +9,15 @@ import com.aliyun.oss.common.auth.DefaultCredentialProvider;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.UUID;
 
+@Slf4j
 @Data
 @AllArgsConstructor
-@Slf4j
 public class AliOssUtil {
 
     private String endpoint;
@@ -24,20 +27,22 @@ public class AliOssUtil {
 
     /**
      * 文件上传
-     *
-     * @param bytes
-     * @param objectName
-     * @return
      */
-    public String upload(byte[] bytes, String objectName) {
+    public String upload(MultipartFile multipartFile) throws IOException {
 
         CredentialsProvider credentialsProvider = new DefaultCredentialProvider(accessKeyId, accessKeySecret);
         // 创建OSSClient实例。
         OSS ossClient = new OSSClientBuilder().build(endpoint, credentialsProvider);
 
+        // UUID命名 防止文件覆盖
+        String originalFilename = multipartFile.getOriginalFilename();
+        assert originalFilename != null;
+        String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        String objectName = UUID.randomUUID() + extension;
+
         try {
             // 创建PutObject请求。
-            ossClient.putObject(bucketName, objectName, new ByteArrayInputStream(bytes));
+            ossClient.putObject(bucketName, objectName, multipartFile.getInputStream());
         } catch (OSSException oe) {
             System.out.println("Caught an OSSException, which means your request made it to OSS, "
                     + "but was rejected with an error response for some reason.");
