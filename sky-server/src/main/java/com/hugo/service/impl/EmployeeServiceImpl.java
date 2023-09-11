@@ -2,30 +2,25 @@ package com.hugo.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.hugo.annotation.AutoFill;
 import com.hugo.constant.MessageConstant;
 import com.hugo.constant.StatusConstant;
-import com.hugo.context.BaseContext;
 import com.hugo.dto.EmployeeDTO;
 import com.hugo.dto.EmployeeLoginDTO;
 import com.hugo.dto.EmployeePageQueryDTO;
 import com.hugo.dto.PasswordEditDTO;
 import com.hugo.entity.Employee;
-import com.hugo.enumeration.OperationType;
 import com.hugo.exception.AccountLockedException;
 import com.hugo.exception.AccountNotFoundException;
+import com.hugo.exception.PasswordEditFailedException;
 import com.hugo.exception.PasswordErrorException;
 import com.hugo.mapper.EmployeeMapper;
 import com.hugo.result.PageResult;
 import com.hugo.service.EmployeeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -104,7 +99,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (password.equals(oldPassword))
             employeeMapper.update(emp);
         else
-            throw new PasswordErrorException(MessageConstant.PASSWORD_EDIT_FAILED);
+            throw new PasswordEditFailedException(MessageConstant.PASSWORD_EDIT_FAILED);
 
     }
 
