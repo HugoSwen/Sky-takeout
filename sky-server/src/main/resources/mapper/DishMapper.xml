@@ -10,4 +10,16 @@
             VALUE (#{name}, #{categoryId}, #{price}, #{image}, #{description}, #{createTime}, #{updateTime},
                    #{createUser}, #{updateUser})
     </insert>
+
+    <select id="pageQuery" resultType="com.hugo.vo.DishVO">
+        select d.id, d.name, d.category_id, d.price, d.image, d.description, d.status, d.update_time, c.name categoryName
+        from dish d left join category c
+        on d.category_id = c.id
+        <where>
+            <if test="name != name and name != ''">d.name like concat('%', #{name},'%')</if>
+            <if test="categoryId != null">d.category_id = #{categoryId}</if>
+            <if test="status != null">d.status = #{status}</if>
+        </where>
+    </select>
+
 </mapper>
