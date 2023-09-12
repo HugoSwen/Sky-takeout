@@ -28,8 +28,8 @@ public class DishController {
      */
     @ApiOperation(value = "新增菜品")
     @PostMapping
-    public Result addDishWithFlavor(@RequestBody DishDTO dishDTO){
-        log.info("新增菜品及口味：{}",dishDTO);
+    public Result addDishWithFlavor(@RequestBody DishDTO dishDTO) {
+        log.info("新增菜品及口味：{}", dishDTO);
 
         dishService.addDishWithFlavor(dishDTO);
         return Result.success();
@@ -39,7 +39,7 @@ public class DishController {
      * 菜品分页查询
      */
     @GetMapping("/page")
-    public Result<PageResult> pageQuery(DishPageQueryDTO dishPageQueryDTO){
+    public Result<PageResult> pageQuery(DishPageQueryDTO dishPageQueryDTO) {
         log.info("菜品分页查询，页码：{}，页面大小：{}", dishPageQueryDTO.getPage(), dishPageQueryDTO.getPageSize());
 
         PageResult pageResult = dishService.pageQuery(dishPageQueryDTO);
@@ -50,7 +50,7 @@ public class DishController {
      * 根据id查询菜品及其口味
      */
     @GetMapping("/{id}")
-    public Result<DishDTO> getByIdWithFlavor(@PathVariable Long id){
+    public Result<DishDTO> getByIdWithFlavor(@PathVariable Long id) {
         log.info("根据id查询菜品及其口味：{}", id);
 
         DishDTO dishDTO = dishService.getByIdWithFlavor(id);
@@ -60,9 +60,8 @@ public class DishController {
     /**
      * 修改菜品信息
      */
-    // TODO 完善sql语句
     @PutMapping
-    public Result update(@RequestBody DishDTO dishDTO){
+    public Result update(@RequestBody DishDTO dishDTO) {
         log.info("修改菜品及其口味信息：{}", dishDTO);
 
         dishService.updateWithFlavor(dishDTO);
@@ -70,13 +69,25 @@ public class DishController {
     }
 
     /**
+     * 启用禁用菜品
+     */
+    @PostMapping("/status/{status}")
+    public Result enableOrDisable(@PathVariable Integer status, Long id) {
+        log.info("启用禁用菜品，菜品id：{}，状态设置：{}", id, status);
+
+        dishService.setStatus(status, id);
+        return Result.success();
+    }
+
+    /**
      * 删除菜品
      */
     @DeleteMapping
-    public Result delete(@RequestParam List<Long> ids){
+    public Result delete(@RequestParam List<Long> ids) {
         log.info("批量删除菜品：{}", ids);
 
         dishService.deleteBatch(ids);
         return Result.success();
     }
+
 }

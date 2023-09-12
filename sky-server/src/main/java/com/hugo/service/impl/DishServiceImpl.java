@@ -106,6 +106,17 @@ public class DishServiceImpl implements DishService {
         // 删除口味表原来的信息
         dishFlavorMapper.deleteByDishId(dish.getId());
         // 插入口味信息
-        dishFlavorMapper.insertBatch(flavors);
+        if (!flavors.isEmpty())
+            dishFlavorMapper.insertBatch(flavors);
+    }
+
+    @Override
+    public void setStatus(Integer status, Long id) {
+        Dish dish = Dish.builder()
+                .id(id)
+                .status(status)
+                .build();
+
+        dishMapper.update(dish);
     }
 }
