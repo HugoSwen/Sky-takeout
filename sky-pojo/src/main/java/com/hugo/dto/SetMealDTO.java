@@ -1,6 +1,6 @@
 package com.hugo.dto;
 
-import com.hugo.entity.SetmealDish;
+import com.hugo.entity.SetMealDish;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class SetmealDTO implements Serializable {
+public class SetMealDTO implements Serializable {
 
     private Long id;
 
@@ -32,6 +32,6 @@ public class SetmealDTO implements Serializable {
     private String image;
 
     //套餐菜品关系
-    private List<SetmealDish> setmealDishes = new ArrayList<>();
+    private List<SetMealDish> setmealDishes;
 
 }

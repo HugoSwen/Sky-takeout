@@ -30,10 +30,10 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(SQLIntegrityConstraintViolationException.class)
     public Result SQLIntegrityConstraintViolationHandler(SQLIntegrityConstraintViolationException ex){
-        log.error("字段重复：{}", ex.getMessage());
         // Duplicate entry 'admin' for key 'employee.idx_username'
         String message = ex.getMessage();
         if (message.contains("Duplicate entry")){
+            log.error("字段重复：{}", ex.getMessage());
             String[] s = message.split(" ");
             String username = s[2];
             String msg = username + MessageConstant.ALREADY_EXIST;

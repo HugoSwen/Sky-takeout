@@ -1,6 +1,5 @@
-package com.hugo.vo;
+package com.hugo.entity;
 
-import com.hugo.entity.SetmealDish;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,14 +8,17 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * 套餐
+ */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SetmealVO implements Serializable {
+public class SetMeal implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private Long id;
 
@@ -38,12 +40,11 @@ public class SetmealVO implements Serializable {
     //图片
     private String image;
 
-    //更新时间
+    private LocalDateTime createTime;
+
     private LocalDateTime updateTime;
 
-    //分类名称
-    private String categoryName;
+    private Long createUser;
 
-    //套餐和菜品的关联关系
-    private List<SetmealDish> setmealDishes = new ArrayList<>();
+    private Long updateUser;
 }

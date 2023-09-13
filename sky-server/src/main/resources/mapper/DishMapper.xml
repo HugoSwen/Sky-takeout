@@ -34,7 +34,7 @@
     <delete id="deleteBatch">
         delete from dish
         where id in
-        <include refid="list"></include>
+        <include refid="list"/>
     </delete>
 
     <select id="pageQuery" resultType="com.hugo.vo.DishVO">
@@ -43,16 +43,16 @@
         on d.category_id = c.id
         <where>
             <if test="name != null and name != ''">d.name like concat('%', #{name},'%')</if>
-            <if test="categoryId != null">d.category_id = #{categoryId}</if>
-            <if test="status != null">d.status = #{status}</if>
+            <if test="categoryId != null">and d.category_id = #{categoryId}</if>
+            <if test="status != null">and d.status = #{status}</if>
         </where>
-        order by d.create_time
+        order by d.create_time desc
     </select>
 
     <select id="countEnableByIds" resultType="java.lang.Long">
         select count(id) from dish
         where id in
-        <include refid="list"></include>
+        <include refid="list"/>
         and status = 1
     </select>
 

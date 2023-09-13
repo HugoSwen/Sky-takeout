@@ -3,12 +3,16 @@ package com.hugo.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hugo.annotation.AutoFill;
+import com.hugo.constant.MessageConstant;
+import com.hugo.constant.StatusConstant;
 import com.hugo.context.BaseContext;
 import com.hugo.dto.CategoryDTO;
 import com.hugo.dto.CategoryPageQueryDTO;
 import com.hugo.entity.Category;
 import com.hugo.enumeration.OperationType;
+import com.hugo.exception.DeletionNotAllowedException;
 import com.hugo.mapper.CategoryMapper;
+import com.hugo.mapper.DishMapper;
 import com.hugo.result.PageResult;
 import com.hugo.service.CategoryService;
 import org.springframework.beans.BeanUtils;
@@ -17,12 +21,16 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryMapper categoryMapper;
+
+    @Autowired
+    private DishMapper dishMapper;
 
     @Override
     public void addCategory(CategoryDTO categoryDTO) {
@@ -63,6 +71,15 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public void deleteById(Integer id) {
+        // 分类是否启用
+        Category category = categoryMapper.getById(id);
+
+        if (Objects.equals(category.getStatus(), StatusConstant.ENABLE))
+            throw new DeletionNotAllowedException(MessageConstant.CATEGORY_ENABLE);
+
+        // 分类是否关联了菜品或者套餐
+
+
         categoryMapper.deleteById(id);
     }
 

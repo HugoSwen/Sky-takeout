@@ -11,7 +11,6 @@ import com.hugo.exception.DeletionNotAllowedException;
 import com.hugo.mapper.DishFlavorMapper;
 import com.hugo.mapper.DishMapper;
 import com.hugo.mapper.SetMealDishMapper;
-import com.hugo.mapper.SetMealMapper;
 import com.hugo.result.PageResult;
 import com.hugo.service.DishService;
 import com.hugo.vo.DishVO;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -81,33 +79,33 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
-    public DishDTO getByIdWithFlavor(Long id) {
+    public DishVO getByIdWithFlavor(Long id) {
         Dish dish = dishMapper.getById(id);
         List<DishFlavor> flavors = dishFlavorMapper.getByDishId(id);
 
-        DishDTO dishDTO = new DishDTO();
-        BeanUtils.copyProperties(dish ,dishDTO);
-        dishDTO.setFlavors(flavors);
-        return dishDTO;
+        DishVO dishVO = new DishVO();
+        BeanUtils.copyProperties(dish ,dishVO);
+        dishVO.setFlavors(flavors);
+        return dishVO;
     }
 
     @Transactional
     @Override
     public void updateWithFlavor(DishDTO dishDTO) {
         Dish dish = new Dish();
-        List<DishFlavor> flavors;
-
         BeanUtils.copyProperties(dishDTO, dish);
-        flavors = dishDTO.getFlavors();
-        flavors.forEach(flavor -> flavor.setDishId(dish.getId()));
 
         // 修改菜品表及其基本信息
         dishMapper.update(dish);
         // 删除口味表原来的信息
         dishFlavorMapper.deleteByDishId(dish.getId());
+
+        List<DishFlavor> flavors = dishDTO.getFlavors();
         // 插入口味信息
-        if (!flavors.isEmpty())
+        if (flavors != null && !flavors.isEmpty()){
+            flavors.forEach(flavor -> flavor.setDishId(dish.getId()));
             dishFlavorMapper.insertBatch(flavors);
+        }
     }
 
     @Override

@@ -4,12 +4,26 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hugo.mapper.SetMealDishMapper">
 
-    <select id="countByDishIds" resultType="java.lang.Long">
-        select count(id) from setmeal_dish
-        where dish_id in
+    <sql id="list">
         <foreach collection="ids" item="id" separator="," open="(" close=")">
             #{id}
         </foreach>
-    </select>
+    </sql>
 
+    <insert id="insertBatch">
+        insert into setmeal_dish (setmeal_id, dish_id, name, price, copies) values
+        <foreach collection="setMealDishes" item="dish" separator=",">
+            (#{dish.setMealId}, #{dish.dishId}, #{dish.name}, #{dish.price}, #{dish.copies})
+        </foreach>
+    </insert>
+    <delete id="deleteBySetMealIds">
+        delete from setmeal_dish where setmeal_id in
+        <include refid="list"/>
+    </delete>
+
+    <select id="countByDishIds" resultType="java.lang.Long">
+        select count(id) from setmeal_dish
+        where dish_id in
+        <include refid="list"/>
+    </select>
 </mapper>
