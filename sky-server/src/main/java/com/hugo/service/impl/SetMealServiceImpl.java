@@ -3,11 +3,13 @@ package com.hugo.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hugo.constant.MessageConstant;
+import com.hugo.constant.StatusConstant;
 import com.hugo.dto.SetMealDTO;
 import com.hugo.dto.SetMealPageQueryDTO;
 import com.hugo.entity.SetMeal;
 import com.hugo.entity.SetMealDish;
 import com.hugo.exception.DeletionNotAllowedException;
+import com.hugo.mapper.DishMapper;
 import com.hugo.mapper.SetMealDishMapper;
 import com.hugo.mapper.SetMealMapper;
 import com.hugo.result.PageResult;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class SetMealServiceImpl implements SetMealService {
@@ -29,6 +32,9 @@ public class SetMealServiceImpl implements SetMealService {
 
     @Autowired
     private SetMealDishMapper setMealDishMapper;
+
+    @Autowired
+    private DishMapper dishMapper;
 
     @Transactional
     @Override
@@ -82,6 +88,15 @@ public class SetMealServiceImpl implements SetMealService {
 
     @Override
     public void setStatus(Integer status, Long id) {
+        if (Objects.equals(status, StatusConstant.ENABLE)){
+            List<Long> dishIds = setMealDishMapper.getDishIdsBySetMealId(id);
+            if (dishIds != null && !dishIds.isEmpty()) {
+                Long dishCnt = dishMapper.countEnableByIds(dishIds);
+                if (dishCnt < dishIds.size())
+                    throw new DeletionNotAllowedException(MessageConstant.SETMEAL_ENABLE_FAILED);
+            }
+        }
+
         SetMeal setMeal = SetMeal.builder()
                 .id(id)
                 .status(status)

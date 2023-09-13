@@ -13,6 +13,7 @@ import com.hugo.enumeration.OperationType;
 import com.hugo.exception.DeletionNotAllowedException;
 import com.hugo.mapper.CategoryMapper;
 import com.hugo.mapper.DishMapper;
+import com.hugo.mapper.SetMealMapper;
 import com.hugo.result.PageResult;
 import com.hugo.service.CategoryService;
 import org.springframework.beans.BeanUtils;
@@ -31,6 +32,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private DishMapper dishMapper;
+
+    @Autowired
+    private SetMealMapper setMealMapper;
 
     @Override
     public void addCategory(CategoryDTO categoryDTO) {
@@ -70,7 +74,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Long id) {
         // 分类是否启用
         Category category = categoryMapper.getById(id);
 
@@ -78,7 +82,13 @@ public class CategoryServiceImpl implements CategoryService {
             throw new DeletionNotAllowedException(MessageConstant.CATEGORY_ENABLE);
 
         // 分类是否关联了菜品或者套餐
+        Long dishCnt = dishMapper.countByCategoryId(id);
+        if (dishCnt > 0)
+            throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_DISH);
 
+        Long setMealCnt = setMealMapper.countByCategoryId(id);
+        if (setMealCnt > 0)
+            throw new DeletionNotAllowedException(MessageConstant.CATEGORY_BE_RELATED_BY_SETMEAL);
 
         categoryMapper.deleteById(id);
     }

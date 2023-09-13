@@ -15,7 +15,7 @@ import java.util.List;
 public interface SetMealMapper {
 
     @Select("select count(id) from setmeal where category_id = #{categoryId}")
-    Integer countByCategoryId(Long id);
+    Long countByCategoryId(Long id);
 
     @AutoFill(OperationType.INSERT)
     void insert(SetMeal setMeal);

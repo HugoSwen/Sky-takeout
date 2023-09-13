@@ -28,8 +28,8 @@ public interface CategoryMapper {
     List<Category> getByType(Integer type);
 
     @Delete("delete from category where id = #{id}")
-    void deleteById(Integer id);
+    void deleteById(Long id);
 
     @Select("select * from category where id = #{id}")
-    Category getById(Integer id);
+    Category getById(Long id);
 }

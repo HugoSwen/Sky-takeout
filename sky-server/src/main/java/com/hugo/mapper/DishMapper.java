@@ -17,7 +17,7 @@ import java.util.List;
 public interface DishMapper {
 
     @Select("select count(*) from dish where category_id = #{categoryId}")
-    Integer countByCategoryId(Long categoryId);
+    Long countByCategoryId(Long categoryId);
 
     @AutoFill(OperationType.INSERT)
     void insert(Dish dish);

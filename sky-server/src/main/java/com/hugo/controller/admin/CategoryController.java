@@ -90,7 +90,7 @@ public class CategoryController {
      */
     @ApiOperation(value = "根据id删除分类")
     @DeleteMapping
-    public Result deleteById(Integer id) {
+    public Result deleteById(Long id) {
         log.info("根据id删除分类：{}", id);
 
         categoryService.deleteById(id);

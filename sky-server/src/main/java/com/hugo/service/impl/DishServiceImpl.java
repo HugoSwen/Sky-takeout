@@ -3,16 +3,20 @@ package com.hugo.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hugo.constant.MessageConstant;
+import com.hugo.constant.StatusConstant;
 import com.hugo.dto.DishDTO;
 import com.hugo.dto.DishPageQueryDTO;
 import com.hugo.entity.Dish;
 import com.hugo.entity.DishFlavor;
+import com.hugo.entity.SetMeal;
 import com.hugo.exception.DeletionNotAllowedException;
 import com.hugo.mapper.DishFlavorMapper;
 import com.hugo.mapper.DishMapper;
 import com.hugo.mapper.SetMealDishMapper;
+import com.hugo.mapper.SetMealMapper;
 import com.hugo.result.PageResult;
 import com.hugo.service.DishService;
+import com.hugo.service.SetMealService;
 import com.hugo.vo.DishVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +24,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class DishServiceImpl implements DishService {
 
     @Autowired
     private DishMapper dishMapper;
-
     @Autowired
     private DishFlavorMapper dishFlavorMapper;
-
     @Autowired
     private SetMealDishMapper setMealDishMapper;
+    @Autowired
+    private SetMealService setMealService;
 
     @Transactional
     @Override
@@ -43,8 +48,7 @@ public class DishServiceImpl implements DishService {
         Long id = dish.getId();
 
         List<DishFlavor> flavors = dishDTO.getFlavors();
-        if (flavors != null && !flavors.isEmpty())
-        {
+        if (flavors != null && !flavors.isEmpty()) {
             flavors.forEach(flavor -> flavor.setDishId(id));
             dishFlavorMapper.insertBatch(flavors);
         }
@@ -84,7 +88,7 @@ public class DishServiceImpl implements DishService {
         List<DishFlavor> flavors = dishFlavorMapper.getByDishId(id);
 
         DishVO dishVO = new DishVO();
-        BeanUtils.copyProperties(dish ,dishVO);
+        BeanUtils.copyProperties(dish, dishVO);
         dishVO.setFlavors(flavors);
         return dishVO;
     }
@@ -102,7 +106,7 @@ public class DishServiceImpl implements DishService {
 
         List<DishFlavor> flavors = dishDTO.getFlavors();
         // 插入口味信息
-        if (flavors != null && !flavors.isEmpty()){
+        if (flavors != null && !flavors.isEmpty()) {
             flavors.forEach(flavor -> flavor.setDishId(dish.getId()));
             dishFlavorMapper.insertBatch(flavors);
         }
@@ -110,11 +114,16 @@ public class DishServiceImpl implements DishService {
 
     @Override
     public void setStatus(Integer status, Long id) {
+        if (Objects.equals(status, StatusConstant.DISABLE)) {
+            List<Long> setMealIds = setMealDishMapper.getSetMealIdsByDishId(id);
+            for (Long setMealId : setMealIds)
+                setMealService.setStatus(StatusConstant.DISABLE, setMealId);
+        }
+
         Dish dish = Dish.builder()
                 .id(id)
                 .status(status)
                 .build();
-
         dishMapper.update(dish);
     }
 
