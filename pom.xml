@@ -34,7 +34,6 @@
         <knife4j>3.0.3</knife4j>
         <aop>3.1.2</aop>
         <jjwt>0.9.1</jjwt>
-        <jaxb-api>2.3.1</jaxb-api>
         <javax.activation>1.1.1</javax.activation>
         <jaxb-runtime>2.3.3</jaxb-runtime>
         <poi>3.16</poi>
@@ -95,12 +94,6 @@
                 <groupId>com.aliyun.oss</groupId>
                 <artifactId>aliyun-sdk-oss</artifactId>
                 <version>${aliyun.sdk.oss}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.xml.bind</groupId>
-                <artifactId>jaxb-api</artifactId>
-                <version>${jaxb-api}</version>
             </dependency>
 
             <dependency>
