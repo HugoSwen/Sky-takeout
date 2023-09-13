@@ -2,6 +2,7 @@ package com.hugo.service;
 
 import com.hugo.dto.DishDTO;
 import com.hugo.dto.DishPageQueryDTO;
+import com.hugo.entity.Dish;
 import com.hugo.result.PageResult;
 import com.hugo.vo.DishVO;
 
@@ -19,4 +20,6 @@ public interface DishService {
     void updateWithFlavor(DishDTO dishDTO);
 
     void setStatus(Integer status, Long id);
+
+    List<Dish> getByCategoryId(Long categoryId);
 }

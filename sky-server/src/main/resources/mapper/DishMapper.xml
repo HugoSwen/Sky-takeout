@@ -56,4 +56,13 @@
         and status = 1
     </select>
 
+    <select id="getByCategoryId" resultType="Dish">
+        select * from dish
+        where status = 1
+        <if test="categoryId != null">
+            and category_id = #{categoryId}
+        </if>
+        order by create_time desc
+    </select>
+
 </mapper>

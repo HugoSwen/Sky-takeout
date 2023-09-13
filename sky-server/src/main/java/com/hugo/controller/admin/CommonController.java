@@ -4,6 +4,7 @@ import com.hugo.constant.MessageConstant;
 import com.hugo.result.Result;
 import com.hugo.utils.AliOssUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ public class CommonController {
     @Autowired
     private AliOssUtil aliOssUtil;
 
+    @ApiOperation(value = "文件上传")
     @PostMapping("/upload")
     public Result<String> uploadFile(MultipartFile file) {
         log.info("上传文件到AliOss：{}", file.getOriginalFilename());
