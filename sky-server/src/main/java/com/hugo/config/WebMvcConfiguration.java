@@ -1,6 +1,7 @@
 package com.hugo.config;
 
 import com.hugo.interceptor.JwtTokenAdminInterceptor;
+import com.hugo.interceptor.JwtTokenUserInterceptor;
 import com.hugo.json.JacksonObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     @Autowired
     private JwtTokenAdminInterceptor jwtTokenAdminInterceptor;
 
+    @Autowired
+    private JwtTokenUserInterceptor jwtTokenUserInterceptor;
+
     /**
      * 注册自定义拦截器
      */
@@ -39,13 +43,18 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         registry.addInterceptor(jwtTokenAdminInterceptor)
                 .addPathPatterns("/admin/**")
                 .excludePathPatterns("/admin/employee/login");
+
+        registry.addInterceptor(jwtTokenUserInterceptor)
+                .addPathPatterns("/user/**")
+                .excludePathPatterns("/user/user/login")
+                .excludePathPatterns("/user/shop/status");
     }
 
     /**
      * 通过knife4j生成接口文档
      */
     @Bean
-    public Docket docket() {
+    public Docket docketAdmin() {
         log.info("准备生成接口文档...");
 
         ApiInfo apiInfo = new ApiInfoBuilder()
@@ -54,9 +63,28 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .description("苍穹外卖项目接口文档")
                 .build();
         return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("管理端接口")
                 .apiInfo(apiInfo)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.hugo.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.hugo.controller.admin"))
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    @Bean
+    public Docket docketUser() {
+        log.info("准备生成接口文档...");
+
+        ApiInfo apiInfo = new ApiInfoBuilder()
+                .title("苍穹外卖项目接口文档")
+                .version("2.0")
+                .description("苍穹外卖项目接口文档")
+                .build();
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("用户端接口")
+                .apiInfo(apiInfo)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.hugo.controller.user"))
                 .paths(PathSelectors.any())
                 .build();
     }

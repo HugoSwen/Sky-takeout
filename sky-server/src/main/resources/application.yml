@@ -42,9 +42,14 @@ logging:
 
 hugo:
   jwt:
-    admin-secret-key: hugoweb
+    # admin
+    admin-secret-key: hugoAdmin
     admin-ttl: 7200000
     admin-token-name: token
+    # user
+    user-secret-key: hugoUser
+    user-ttl: 7200000
+    user-token-name: authentication
 
   alioss:
     endpoint: ${hugo.alioss.endpoint}
@@ -52,4 +57,6 @@ hugo:
     access-key-secret: ${hugo.alioss.access-key-secret}
     bucket-name: ${hugo.alioss.bucket-name}
 
-
+  wechat:
+    appid: ${hugo.wechat.appid}
+    secret: ${hugo.wechat.secret}

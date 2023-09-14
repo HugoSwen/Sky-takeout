@@ -18,7 +18,7 @@ import java.util.List;
 
 @Api(tags = "分类相关接口")
 @Slf4j
-@RestController
+@RestController("adminCategoryController")
 @RequestMapping("admin/category")
 public class CategoryController {
 
@@ -78,7 +78,7 @@ public class CategoryController {
      */
     @ApiOperation(value = "根据类型查询分类")
     @GetMapping("/list")
-    public Result<List<Category>> getByType(Integer type) {
+    public Result<List<Category>> list(Integer type) {
         log.info("根据类型查询分类：{}", type);
 
         List<Category> list = categoryService.getByType(type);

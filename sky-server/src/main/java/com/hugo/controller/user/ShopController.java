@@ -1,6 +1,6 @@
 package com.hugo.controller.user;
 
-import com.hugo.constant.FieldConstant;
+import com.hugo.constant.ShopConstant;
 import com.hugo.constant.StatusConstant;
 import com.hugo.result.Result;
 import io.swagger.annotations.Api;
@@ -27,7 +27,7 @@ public class ShopController {
     @ApiOperation(value = "获取营业状态")
     @GetMapping("/status")
     public Result<Integer> getShopStatus(){
-        Integer status = (Integer) redisTemplate.opsForValue().get(FieldConstant.SHOP_STATUS);
+        Integer status = (Integer) redisTemplate.opsForValue().get(ShopConstant.SHOP_STATUS);
         log.info("获取当前营业状态为：{}", Objects.equals(status, StatusConstant.ENABLE) ? "营业中" : "打烊中");
         return Result.success(status);
     }

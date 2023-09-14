@@ -16,3 +16,7 @@ hugo:
     access-key-id: LTAI5tB2BySkowf26xUzPrUn
     access-key-secret: OuijqcFAsxKvsnfoDtuQDLSrpHd1f0
     bucket-name: hugo-web-bucket1
+
+  wechat:
+    appid: wx610fd2f07a9d254d
+    secret: 16ec656d7e03abc4b278d0a0f3d0e0a0

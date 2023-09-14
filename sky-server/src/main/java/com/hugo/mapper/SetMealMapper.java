@@ -31,4 +31,7 @@ public interface SetMealMapper {
     long countEnableByIds(List<Long> ids);
 
     void deleteByIds(List<Long> ids);
+
+    @Select("select * from setmeal where category_id = #{categoryId}")
+    List<SetMeal> getByCategoryId(Long categoryId);
 }

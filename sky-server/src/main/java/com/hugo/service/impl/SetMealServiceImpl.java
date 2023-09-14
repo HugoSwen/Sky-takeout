@@ -6,6 +6,7 @@ import com.hugo.constant.MessageConstant;
 import com.hugo.constant.StatusConstant;
 import com.hugo.dto.SetMealDTO;
 import com.hugo.dto.SetMealPageQueryDTO;
+import com.hugo.entity.Dish;
 import com.hugo.entity.SetMeal;
 import com.hugo.entity.SetMealDish;
 import com.hugo.exception.DeletionNotAllowedException;
@@ -14,6 +15,7 @@ import com.hugo.mapper.SetMealDishMapper;
 import com.hugo.mapper.SetMealMapper;
 import com.hugo.result.PageResult;
 import com.hugo.service.SetMealService;
+import com.hugo.vo.DishItemVO;
 import com.hugo.vo.SetMealVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +48,7 @@ public class SetMealServiceImpl implements SetMealService {
         Long id = setMeal.getId();
 
         List<SetMealDish> setMealDishes = setmealDTO.getSetmealDishes();
-        if (setMealDishes != null && !setMealDishes.isEmpty()){
+        if (setMealDishes != null && !setMealDishes.isEmpty()) {
             setMealDishes.forEach(setMealDish -> setMealDish.setSetMealId(id));
             setMealDishMapper.insertBatch(setMealDishes);
         }
@@ -80,7 +82,7 @@ public class SetMealServiceImpl implements SetMealService {
 
         setMealDishMapper.deleteBySetMealId(setMeal.getId());
         List<SetMealDish> setMealDishes = setMealDTO.getSetmealDishes();
-        if (setMealDishes != null && !setMealDishes.isEmpty()){
+        if (setMealDishes != null && !setMealDishes.isEmpty()) {
             setMealDishes.forEach(setMealDish -> setMealDish.setSetMealId(setMeal.getId()));
             setMealDishMapper.insertBatch(setMealDishes);
         }
@@ -88,7 +90,7 @@ public class SetMealServiceImpl implements SetMealService {
 
     @Override
     public void setStatus(Integer status, Long id) {
-        if (Objects.equals(status, StatusConstant.ENABLE)){
+        if (Objects.equals(status, StatusConstant.ENABLE)) {
             List<Long> dishIds = setMealDishMapper.getDishIdsBySetMealId(id);
             if (dishIds != null && !dishIds.isEmpty()) {
                 Long dishCnt = dishMapper.countEnableByIds(dishIds);
@@ -115,6 +117,31 @@ public class SetMealServiceImpl implements SetMealService {
         setMealMapper.deleteByIds(ids);
         // 删除套餐对应菜品信息
         setMealDishMapper.deleteBySetMealIds(ids);
+    }
+
+    @Override
+    public List<SetMeal> getByCategoryId(Long categoryId) {
+        return setMealMapper.getByCategoryId(categoryId);
+    }
+
+    @Override
+    public List<DishItemVO> getDishItemBySetMealId(Long setMealId) {
+        List<SetMealDish> setMealDishes = setMealDishMapper.getBySetMealId(setMealId);
+
+        List<DishItemVO> list = new ArrayList<>();
+        for (SetMealDish setMealDish : setMealDishes) {
+            Dish dish = dishMapper.getById(setMealDish.getDishId());
+
+            DishItemVO dishItem = DishItemVO.builder()
+                    .name(dish.getName())
+                    .copies(setMealDish.getCopies())
+                    .image(dish.getImage())
+                    .description(dish.getDescription())
+                    .build();
+            list.add(dishItem);
+        }
+
+        return list;
     }
 
 
