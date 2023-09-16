@@ -1,5 +1,6 @@
 package com.hugo.service.impl;
 
+import com.aliyuncs.ram.model.v20150501.ListUsersForGroupRequest;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hugo.constant.MessageConstant;
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -130,5 +132,22 @@ public class DishServiceImpl implements DishService {
     @Override
     public List<Dish> getByCategoryId(Long categoryId) {
         return dishMapper.getByCategoryId(categoryId);
+    }
+
+    @Override
+    public List<DishVO> getByCategoryIdWithFlavor(Long categoryId) {
+        List<DishVO> dishVOList = new ArrayList<>();
+
+        List<Dish> dishList = dishMapper.getByCategoryId(categoryId);
+        for (Dish dish: dishList){
+            List<DishFlavor> flavors = dishFlavorMapper.getByDishId(dish.getId());
+            DishVO dishVO = DishVO.builder()
+                    .flavors(flavors)
+                    .build();
+            BeanUtils.copyProperties(dish, dishVO);
+            dishVOList.add(dishVO);
+        }
+
+        return dishVOList;
     }
 }

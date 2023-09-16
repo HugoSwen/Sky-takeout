@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapters;
@@ -29,6 +31,7 @@ public class CategoryController {
      * 新增分类
      */
     @ApiOperation(value = "新增分类")
+    @CacheEvict(cacheNames = "userCache:category", allEntries = true)
     @PostMapping
     public Result addCategory(@RequestBody CategoryDTO categoryDTO) {
         log.info("新增分类：{}", categoryDTO);
@@ -53,6 +56,7 @@ public class CategoryController {
      * 修改分类
      */
     @ApiOperation(value = "修改分类")
+    @CacheEvict(cacheNames = "userCache:category", allEntries = true)
     @PutMapping
     public Result update(@RequestBody CategoryDTO categoryDTO) {
         log.info("修改分类：{}", categoryDTO);
@@ -65,6 +69,7 @@ public class CategoryController {
      * 启用禁用分类
      */
     @ApiOperation(value = "启用禁用分类")
+    @CacheEvict(cacheNames = "userCache:category", allEntries = true)
     @PostMapping("/status/{status}")
     public Result enableOrDisable(@PathVariable Integer status, Long id) {
         log.info("启用禁用分类，分类id：{}, 状态设置：{}", id, status);
@@ -89,6 +94,7 @@ public class CategoryController {
      * 根据Id删除分类
      */
     @ApiOperation(value = "根据id删除分类")
+    @CacheEvict(cacheNames = "userCache:category", allEntries = true)
     @DeleteMapping
     public Result deleteById(Long id) {
         log.info("根据id删除分类：{}", id);
