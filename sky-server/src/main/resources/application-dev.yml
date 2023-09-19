@@ -6,7 +6,7 @@ hugo:
     password: 1234
 
   redis:
-    host: 192.168.164.128
+    host: 192.168.47.128
     port: 6379
     database: 0
     password: 123456
