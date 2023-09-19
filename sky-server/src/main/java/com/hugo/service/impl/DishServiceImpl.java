@@ -114,6 +114,7 @@ public class DishServiceImpl implements DishService {
         }
     }
 
+    @Transactional
     @Override
     public void setStatus(Integer status, Long id) {
         if (Objects.equals(status, StatusConstant.DISABLE)) {

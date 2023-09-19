@@ -6,6 +6,7 @@ import com.hugo.mapper.AddressBookMapper;
 import com.hugo.service.AddressBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class AddressBookServiceImpl implements AddressBookService {
         addressBookMapper.update(addressBook);
     }
 
+    @Transactional
     @Override
     public void setDefault(AddressBook addressBook) {
         AddressBook addr = AddressBook.builder()
@@ -57,6 +59,7 @@ public class AddressBookServiceImpl implements AddressBookService {
         return addressBookMapper.getById(id);
     }
 
+    // TODO 判断地址是否关联订单数据
     @Override
     public void delete(Long id) {
         addressBookMapper.delete(id);

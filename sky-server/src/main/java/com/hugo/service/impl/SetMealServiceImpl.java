@@ -74,6 +74,7 @@ public class SetMealServiceImpl implements SetMealService {
         return setMealVO;
     }
 
+    @Transactional
     @Override
     public void updateWithDishes(SetMealDTO setMealDTO) {
         SetMeal setMeal = new SetMeal();
@@ -107,6 +108,7 @@ public class SetMealServiceImpl implements SetMealService {
         setMealMapper.update(setMeal);
     }
 
+    @Transactional
     @Override
     public void deleteBatch(List<Long> ids) {
         // 判断套餐是否起售
