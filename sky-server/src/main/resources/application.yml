@@ -60,3 +60,15 @@ hugo:
   wechat:
     appid: ${hugo.wechat.appid}
     secret: ${hugo.wechat.secret}
+    mchid: ${hugo.wechat.mchid}
+    mch-serial-no: ${hugo.wechat.mch-serial-no}
+    private-key-file-path: ${hugo.wechat.private-key-file-path}
+    api-v3-key: ${hugo.wechat.api-v3-key}
+    we-chat-pay-cert-file-path: ${hugo.wechat.we-chat-pay-cert-file-path}
+    notify-url: ${hugo.wechat.notify-url}
+    refund-notify-url:  ${hugo.wechat.refund-notify-url}
+
+  shop:
+    address: ${hugo.shop.address}
+  baidu:
+    ak: ${hugo.baidu.ak}

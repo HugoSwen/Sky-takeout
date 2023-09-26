@@ -6,7 +6,7 @@ hugo:
     password: 1234
 
   redis:
-    host: 192.168.47.128
+    host: 192.168.88.128
     port: 6379
     database: 0
     password: 123456
@@ -20,3 +20,16 @@ hugo:
   wechat:
     appid: wx610fd2f07a9d254d
     secret: 16ec656d7e03abc4b278d0a0f3d0e0a0
+    # 没有商户 随便写
+    mchid: 78568273456723478
+    mch-serial-no: 487326784627383
+    private-key-file-path: sdkfuiosdhufkjjs
+    api-v3-key: askdjhaoisduiashgd
+    we-chat-pay-cert-file-path: djalskejdqiwwqre
+    notify-url: djhakjwhurdgawb
+    refund-notify-url: asuifyiuahffdawd
+
+  shop:
+    address: 江苏省南京市江宁区秣陵街道佛城西路8号
+  baidu:
+    ak: kdW3U1wqvXo6cddYnvGdsG1gIPQ8Tx7D

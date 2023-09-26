@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface ShoppingCartMapper {
-    @Select("select * from shopping_cart where user_id = #{userId}")
+    @Select("select * from shopping_cart where user_id = #{userId} order by create_time desc")
     List<ShoppingCart> list(Long userId);
 
     ShoppingCart getByDishIdOrSetMealId(ShoppingCart shoppingCart);
@@ -24,4 +24,6 @@ public interface ShoppingCartMapper {
 
     @Delete("delete from shopping_cart where user_id = #{userId}")
     void clean(Long userId);
+
+    void insertBatch(List<ShoppingCart> shoppingCartList);
 }

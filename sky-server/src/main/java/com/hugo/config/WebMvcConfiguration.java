@@ -26,6 +26,7 @@ import java.util.List;
  */
 @Configuration
 @Slf4j
+// TODO 待学习
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     @Autowired
@@ -37,6 +38,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     /**
      * 注册自定义拦截器
      */
+    @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         log.info("开始注册自定义拦截器...");
 
