@@ -21,8 +21,7 @@ public class OrderTask {
     /**
      * 每分钟执行一次支付超时查询
      */
-//    @Scheduled(cron = "0 * * * * ? ")
-    @Scheduled(cron = "0/5 * * * * ? ")
+    @Scheduled(cron = "0 * * * * ? ")
     public void CheckPaymentTimeOut() {
         log.info("订单支付超时处理...");
 
@@ -41,8 +40,7 @@ public class OrderTask {
     /**
      * 每天凌晨一点查找前一天处于派送中的订单
      */
-//    @Scheduled(cron = "0 0 1 * * ? ")
-    @Scheduled(cron = "1/5 * * * * ? ")
+    @Scheduled(cron = "0 0 1 * * ? ")
     public void CheckDeliveryInProgress() {
         log.info("派送中订单未完成处理...");
 
