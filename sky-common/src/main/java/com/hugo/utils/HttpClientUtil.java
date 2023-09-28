@@ -23,6 +23,7 @@ import java.util.Map;
 /**
  * Http工具类
  */
+// TODO 待学习
 public class HttpClientUtil {
 
     static final int TIMEOUT_MSEC = 5 * 1000;

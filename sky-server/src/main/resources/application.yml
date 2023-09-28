@@ -70,5 +70,6 @@ hugo:
 
   shop:
     address: ${hugo.shop.address}
+
   baidu:
     ak: ${hugo.baidu.ak}

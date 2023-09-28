@@ -62,22 +62,20 @@ public class AddressUtil {
         map.put("steps_info", "0");
 
         //路线规划
-        String json = HttpClientUtil.doGet("https://api.map.baidu.com/directionlite/v1/driving", map);
+        String json = HttpClientUtil.doGet("https://api.map.baidu.com/directionlite/v1/riding", map);
 
         jsonObject = JSON.parseObject(json);
-        if (!jsonObject.getString("status").equals("0")) {
+        if (!jsonObject.getString("status").equals("0"))
             throw new OrderBusinessException("配送路线规划失败");
-        }
 
         //数据解析
         JSONObject result = jsonObject.getJSONObject("result");
         JSONArray jsonArray = (JSONArray) result.get("routes");
         Integer distance = (Integer) ((JSONObject) jsonArray.get(0)).get("distance");
 
-        if (distance > 5000) {
+        if (distance > 5000)
             //配送距离超过5000米
             throw new OrderBusinessException("超出配送范围");
-        }
     }
 
 }
