@@ -1,18 +1,22 @@
 spring:
+  # 开发环境
   profiles:
     active: dev
 
+  # 文件传输
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 100MB
 
+  # Sql数据库连接
   datasource:
     driver-class-name: ${hugo.datasource.driver-class-name}
     url: ${hugo.datasource.url}
     username: ${hugo.datasource.username}
     password: ${hugo.datasource.password}
 
+  # Nosql数据库连接
   redis:
     host: ${hugo.redis.host}
     port: ${hugo.redis.port}
@@ -25,12 +29,21 @@ spring:
         min-idle: 0
         max-wait: 1000ms
 
+  # spring cache
+  cache:
+    type: redis
+    redis:
+      cache-null-values: true
+      time-to-live: 3600000
+
+# mybatis映射
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true
   type-aliases-package: com.hugo.entity
 
+# 日志
 logging:
   level:
     com:
@@ -40,6 +53,7 @@ logging:
         controller: info
     org.springframework.jdbc.support.JdbcTransactionManager: debug
 
+# 个人配置
 hugo:
   jwt:
     # admin

@@ -25,7 +25,7 @@ public class DishController {
     private DishService dishService;
 
     @ApiOperation(value = "根据分类id查询菜品")
-    @Cacheable(cacheNames = "userCache:dish", key = "#categoryId")
+    @Cacheable(cacheNames = "userCache:dish", key = "#categoryId", sync = true)
     @GetMapping("/list")
     public Result<List<DishVO>> list(Long categoryId){
         log.info("根据分类id查询菜品：{}", categoryId);

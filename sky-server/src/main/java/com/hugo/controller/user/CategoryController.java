@@ -24,7 +24,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @ApiOperation(value = "根据类型获取分类")
-    @Cacheable(cacheNames = "userCache:category")
+    @Cacheable(cacheNames = "userCache:category", sync = true)
     @GetMapping("/list")
     public Result<List<Category>> list(Integer type){
         log.info("根据type（可为null）获取分类：{}", type);

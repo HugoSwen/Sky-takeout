@@ -28,7 +28,7 @@ public class SetMealController {
      * 根据分类id查询套餐
      */
     @ApiOperation(value = "根据分类id查询套餐")
-    @Cacheable(cacheNames = "userCache:setMeal", key = "#categoryId")
+    @Cacheable(cacheNames = "userCache:setMeal", key = "#categoryId", sync = true)
     @GetMapping("/list")
     public Result<List<SetMeal>> list(Long categoryId){
         log.info("根据分类id查询套餐：{}", categoryId);
@@ -41,7 +41,7 @@ public class SetMealController {
      * 根据套餐id查询菜品
      */
     @ApiOperation(value = "根据套餐id查询菜品")
-    @Cacheable(cacheNames = "userCache:setMeal:dish", key = "#setMealId")
+    @Cacheable(cacheNames = "userCache:setMeal:dish", key = "#setMealId", sync = true)
     @GetMapping("/dish/{id}")
     public Result<List<DishItemVO>> getDishItemBySetMealId(@PathVariable("id") Long setMealId){
         log.info("根据套餐id查询菜品：{}", setMealId);

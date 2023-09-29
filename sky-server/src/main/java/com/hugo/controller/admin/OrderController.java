@@ -37,7 +37,6 @@ public class OrderController {
         return Result.success(pageResult);
     }
 
-
     /**
      * 查询订单详细
      */
