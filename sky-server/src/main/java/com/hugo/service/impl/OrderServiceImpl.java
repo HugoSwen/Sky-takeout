@@ -1,5 +1,6 @@
 package com.hugo.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.hugo.constant.MessageConstant;
@@ -19,13 +20,13 @@ import com.hugo.vo.OrderPaymentVO;
 import com.hugo.vo.OrderStatisticsVO;
 import com.hugo.vo.OrderSubmitVO;
 import com.hugo.vo.OrderVO;
+import com.hugo.websocket.WebSocketServer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,6 +46,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private AddressUtil addressUtil;
+
+    @Autowired
+    private WebSocketServer webSocketServer;
 
     @Autowired
     private UserMapper userMapper;
@@ -144,6 +148,15 @@ public class OrderServiceImpl implements OrderService {
                 .checkoutTime(LocalDateTime.now())
                 .build();
         orderMapper.update(orders);
+
+        // 商家来单提醒
+        Map<String, Object> map = new HashMap<>();
+        map.put("type", 1);
+        map.put("orderId", order.getId());
+        map.put("content", "订单号：" + orderNumber);
+
+        String json = JSON.toJSONString(map);
+        webSocketServer.sendToAllClient(json);
     }
 
     @Override
