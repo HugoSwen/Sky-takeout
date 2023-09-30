@@ -24,6 +24,7 @@ import com.hugo.websocket.WebSocketServer;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import springfox.documentation.spring.web.json.Json;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -349,6 +350,22 @@ public class OrderServiceImpl implements OrderService {
                 .build();
 
         orderMapper.update(orders);
+    }
+
+    @Override
+    public void remindOrder(Long id) {
+        Orders orderDB = orderMapper.getById(id);
+
+        if (orderDB == null)
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+
+        // 客户催单
+        Map<String, Object> map = new HashMap<>();
+        map.put("type", 2);
+        map.put("orderId", id);
+        map.put("content", "订单号：" + orderDB.getNumber());
+        String json = JSON.toJSONString(map);
+        webSocketServer.sendToAllClient(json);
     }
 
 }

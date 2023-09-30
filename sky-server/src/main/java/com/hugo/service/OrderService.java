@@ -35,4 +35,6 @@ public interface OrderService {
     void deliveryOrder(Long id);
 
     void completeOrder(Long id);
+
+    void remindOrder(Long id);
 }
