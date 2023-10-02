@@ -34,4 +34,6 @@ public interface SetMealMapper {
 
     @Select("select * from setmeal where category_id = #{categoryId}")
     List<SetMeal> getByCategoryId(Long categoryId);
+
+    Long countByMap(Integer enable);
 }

@@ -35,4 +35,6 @@ public interface DishMapper {
     void update(Dish dish);
 
     List<Dish> getByCategoryId(Long categoryId);
+
+    Long countByMap(Integer status);
 }

@@ -50,4 +50,10 @@
         where status = 1 and id in
         <include refid="list"/>
     </select>
+    <select id="countByMap" resultType="java.lang.Long">
+        select count(*) from setmeal
+        <where>
+            <if test="status != null">status = #{status}</if>
+        </where>
+    </select>
 </mapper>
