@@ -38,12 +38,7 @@ public class ReportServiceImpl implements ReportService {
             LocalDateTime beginTime = LocalDateTime.of(date, LocalTime.MIN);
             LocalDateTime endTime = LocalDateTime.of(date, LocalTime.MAX);
 
-            Map<String, Object> map = new HashMap<>();
-            map.put("begin", beginTime);
-            map.put("end", endTime);
-            map.put("status", OrdersConstant.COMPLETED);
-
-            Double turnover = orderMapper.sumByMap(map);
+            Double turnover = orderMapper.sumByMap(beginTime, endTime, OrdersConstant.COMPLETED);
             turnover = turnover == null ? 0.0 : turnover;
             turnoverList.add(turnover);
         }
@@ -64,14 +59,10 @@ public class ReportServiceImpl implements ReportService {
             LocalDateTime beginTime = LocalDateTime.of(date, LocalTime.MIN);
             LocalDateTime endTime = LocalDateTime.of(date, LocalTime.MAX);
 
-            Map<String, Object> map = new HashMap<>();
-
-            map.put("end", endTime);
-            Long totalUser = userMapper.countByMap(map);
+            Long totalUser = userMapper.countByMap(null, endTime);
             totalUserList.add(totalUser);
 
-            map.put("begin", beginTime);
-            Long newUser = userMapper.countByMap(map);
+            Long newUser = userMapper.countByMap(beginTime, endTime);
             newUserList.add(newUser);
         }
 
@@ -92,15 +83,10 @@ public class ReportServiceImpl implements ReportService {
             LocalDateTime beginTime = LocalDateTime.of(date, LocalTime.MIN);
             LocalDateTime endTime = LocalDateTime.of(date, LocalTime.MAX);
 
-            Map<String, Object> map = new HashMap<>();
-
-            map.put("begin", beginTime);
-            map.put("end", endTime);
-            Long orderCount = orderMapper.countByMap(map);
+            Long orderCount = orderMapper.countByMap(beginTime, endTime, null);
             orderCountList.add(orderCount);
 
-            map.put("status", OrdersConstant.COMPLETED);
-            Long validOrderCount = orderMapper.countByMap(map);
+            Long validOrderCount = orderMapper.countByMap(beginTime, endTime, OrdersConstant.COMPLETED);
             validOrderCountList.add(validOrderCount);
         }
 
@@ -125,7 +111,10 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public SalesTop10ReportVO getSalesTop10Statistics(LocalDate begin, LocalDate end) {
-        List<GoodsSalesDTO> GoodsSalesList = orderMapper.getSalesTop10(begin, end);
+        LocalDateTime beginTime = LocalDateTime.of(begin, LocalTime.MIN);
+        LocalDateTime endTime = LocalDateTime.of(end, LocalTime.MAX);
+
+        List<GoodsSalesDTO> GoodsSalesList = orderMapper.getSalesTop10(beginTime, endTime);
 
         List<String> nameList = GoodsSalesList.stream().map(GoodsSalesDTO::getName).collect(Collectors.toList());
         List<Integer> numberList = GoodsSalesList.stream().map(GoodsSalesDTO::getNumber).collect(Collectors.toList());

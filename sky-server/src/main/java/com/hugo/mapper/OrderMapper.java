@@ -2,7 +2,6 @@ package com.hugo.mapper;
 
 import com.github.pagehelper.Page;
 import com.hugo.dto.GoodsSalesDTO;
-import com.hugo.dto.OrdersDTO;
 import com.hugo.dto.OrdersPageQueryDTO;
 import com.hugo.entity.Orders;
 import org.apache.ibatis.annotations.Mapper;
@@ -33,9 +32,9 @@ public interface OrderMapper {
     @Select("select * from orders where status = #{status} and order_time <= #{orderTime}")
     List<Orders> getByStatusAndOrderTime(Integer status, LocalDateTime orderTime);
 
-    Double sumByMap(Map<String, Object> map);
+    Double sumByMap(LocalDateTime begin, LocalDateTime end, Integer status);
 
-    Long countByMap(Map<String, Object> map);
+    Long countByMap(LocalDateTime begin, LocalDateTime end, Integer status);
 
-    List<GoodsSalesDTO> getSalesTop10(LocalDate begin, LocalDate end);
+    List<GoodsSalesDTO> getSalesTop10(LocalDateTime begin, LocalDateTime end);
 }
