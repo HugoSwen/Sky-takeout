@@ -1,12 +1,14 @@
 package com.hugo.mapper;
 
 import com.github.pagehelper.Page;
+import com.hugo.dto.GoodsSalesDTO;
 import com.hugo.dto.OrdersDTO;
 import com.hugo.dto.OrdersPageQueryDTO;
 import com.hugo.entity.Orders;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -32,4 +34,8 @@ public interface OrderMapper {
     List<Orders> getByStatusAndOrderTime(Integer status, LocalDateTime orderTime);
 
     Double sumByMap(Map<String, Object> map);
+
+    Long countByMap(Map<String, Object> map);
+
+    List<GoodsSalesDTO> getSalesTop10(LocalDate begin, LocalDate end);
 }
