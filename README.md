@@ -4,7 +4,7 @@
 
 ## 项目简介
 
-项目分为管理端和用户端接口，实现商家——用户交互功能。
+项目分为管理端和用户端接口，实现商家——用户信息交互功能。
 
 * 管理端
     * 员工管理
@@ -29,16 +29,21 @@
 ## 项目技术栈：
 
 1. SpringBoot
-2. Mybatis (**此项目涉及大量多表操作，未使用Mybatis plus**)
-3. Swagger
-4. JWT令牌
+2. SpringWeb
+3. Mybatis (**此项目涉及大量多表操作，未使用Mybatis plus**)
+4. MySQL
 5. PageHelper
-6. Redis
-7. SpringCache
-8. HttpClient
-9. SpringTask
-10. WebSocket
-11. Apache POI
+6. Swagger
+7. JWT
+8. FastJson
+9. SpringAOP
+10. Aliyun OSS
+11. Redis
+12. SpringCache
+13. HttpClient
+14. SpringTask
+15. WebSocket
+16. Apache POI
 
 ## 项目开发工具
 
@@ -46,6 +51,6 @@
 2. 微信开发者工具
 3. Microsoft Edge
 4. VMware Workstation Pro
-5. maven
-6. git
+5. Maven
+6. Git
 7. Apifox
