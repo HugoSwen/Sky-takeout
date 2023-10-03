@@ -5,8 +5,11 @@ import com.hugo.vo.DishOverViewVO;
 import com.hugo.vo.OrderOverViewVO;
 import com.hugo.vo.SetMealOverViewVO;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 public interface WorkspaceService {
-    BusinessDataVO getBusinessData();
+    BusinessDataVO getBusinessData(LocalDateTime begin, LocalDateTime end);
 
     DishOverViewVO getDishOverView();
 

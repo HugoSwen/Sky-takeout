@@ -5,6 +5,7 @@ import com.hugo.vo.SalesTop10ReportVO;
 import com.hugo.vo.TurnoverReportVO;
 import com.hugo.vo.UserReportVO;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 
 public interface ReportService {
@@ -15,4 +16,6 @@ public interface ReportService {
     OrderReportVO getOrderStatistics(LocalDate begin, LocalDate end);
 
     SalesTop10ReportVO getSalesTop10Statistics(LocalDate begin, LocalDate end);
+
+    void exportBusinessData(HttpServletResponse response);
 }

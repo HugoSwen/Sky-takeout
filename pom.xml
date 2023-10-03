@@ -36,7 +36,7 @@
         <jjwt>0.9.1</jjwt>
         <javax.activation>1.1.1</javax.activation>
         <jaxb-runtime>2.3.3</jaxb-runtime>
-        <poi>3.16</poi>
+        <poi>4.1.1</poi>
         <wechatpay>0.4.8</wechatpay>
     </properties>
 

@@ -36,9 +36,7 @@ public class WorkspaceServiceImpl implements WorkspaceService {
     private SetMealMapper setMealMapper;
 
     @Override
-    public BusinessDataVO getBusinessData() {
-        LocalDateTime begin = LocalDateTime.now().with(LocalTime.MIN);
-        LocalDateTime end = LocalDateTime.now().with(LocalTime.MAX);
+    public BusinessDataVO getBusinessData(LocalDateTime begin, LocalDateTime end) {
 
         // 新增用户数量
         Long newUsers = userMapper.countByMap(begin, end);
